@@ -39,8 +39,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    
-    
+    // 语言切换功能
+    if (document.getElementById('langToggle')) {
+        document.getElementById('langToggle').addEventListener('click', function() {
+            if (currentLanguage === 'zh') {
+                switchLanguage('en');
+            } else {
+                switchLanguage('zh');
+            }
+        });
+    }
     
     
     // 初始化显示指令生成器页面
@@ -69,10 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 gameData = result.data;
             } else {
-                console.error('加载游戏数据失败:', result.error);
+                console.error(getText('error_load_game_data') + result.error);
             }
         } catch (error) {
-            console.error('加载游戏数据时发生网络错误:', error.message);
+            console.error(getText('error_network') + error.message);
         }
     }
 
@@ -85,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 const commands = result.data;
-                commandTypeSelect.innerHTML = '<option value="">请选择指令类型</option>';
+                commandTypeSelect.innerHTML = `<option value="" data-lang="generator_select_placeholder">${getText('generator_select_placeholder')}</option>`;
                 
                 for (const [name, command] of Object.entries(commands)) {
                     const option = document.createElement('option');
@@ -94,10 +102,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     commandTypeSelect.appendChild(option);
                 }
             } else {
-                showError('加载指令列表失败: ' + result.error);
+                showError(getText('error_load_commands') + result.error);
             }
         } catch (error) {
-            showError('加载指令列表时发生网络错误: ' + error.message);
+            showError(getText('error_network') + error.message);
         } finally {
             loadingIndicator.style.display = 'none';
         }
@@ -105,112 +113,91 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新表单函数
     async function updateForm() {
-        const commandName = commandTypeSelect.value;
+        const selectedCommand = commandTypeSelect.value;
         
-        if (!commandName) {
+        if (!selectedCommand) {
             commandForm.innerHTML = '';
-            commandResult.textContent = '请选择指令类型并填写参数';
             return;
         }
         
         try {
-            loadingIndicator.style.display = 'block';
-            const response = await fetch(`${API_BASE_URL}/${commandName}`);
+            const response = await fetch(`${API_BASE_URL}/${selectedCommand}`);
             const result = await response.json();
             
             if (result.success) {
                 const command = result.data;
-                let formHTML = '';
+                let formHTML = `<h3 data-lang="generator_form_title">${getText('generator_form_title')}: /${selectedCommand}</h3>`;
                 
-                for (const [paramName, param] of Object.entries(command.parameters)) {
-                    formHTML += createFormField(paramName, param);
+                if (command.parameters && Object.keys(command.parameters).length > 0) {
+                    for (const [paramName, param] of Object.entries(command.parameters)) {
+                        formHTML += createFormField(paramName, param);
+                    }
+                } else {
+                    formHTML += `<p data-lang="generator_no_params">${getText('generator_no_params')}</p>`;
                 }
                 
+                formHTML += `<button type="button" id="generateButton" data-lang="generator_generate_btn">${getText('generator_generate_btn')}</button>`;
                 commandForm.innerHTML = formHTML;
                 
-                // 为所有输入框添加事件监听
-                const inputs = commandForm.querySelectorAll('input, select');
-                inputs.forEach(input => {
-                    input.addEventListener('input', generateCommand);
-                    input.addEventListener('focus', showSuggestions);
-                });
+                // 添加生成按钮事件监听
+                document.getElementById('generateButton').addEventListener('click', generateCommand);
             } else {
-                showError('加载指令详情失败: ' + result.error);
+                showError(getText('error_load_command') + result.error);
             }
         } catch (error) {
-            showError('加载指令详情时发生网络错误: ' + error.message);
-        } finally {
-            loadingIndicator.style.display = 'none';
+            showError(getText('error_network') + error.message);
         }
-        
-        generateCommand();
     }
     
     // 创建表单字段
     function createFormField(paramName, param) {
-        let fieldHTML = `
-            <div class="form-group">
-                <label for="${paramName}">${param.description} (${paramName}):</label>
-        `;
+        let fieldHTML = '';
         
-        if (param.type === 'enum' && param.options) {
-            // 枚举类型使用下拉框
-            fieldHTML += `<select id="${paramName}" ${param.required ? 'required' : ''}>`;
-            fieldHTML += `<option value="">请选择${param.description}</option>`;
-            
-            param.options.forEach(option => {
-                const label = param.optionLabels && param.optionLabels[option] 
-                    ? param.optionLabels[option] 
-                    : option;
-                const selected = param.defaultValue === option ? 'selected' : '';
-                fieldHTML += `<option value="${option}" ${selected}>${label}</option>`;
-            });
-            
-            fieldHTML += '</select>';
-        } else if (param.type === 'item' && gameData && gameData.items) {
-            // 物品类型使用带搜索功能的下拉框
-            fieldHTML += createDatalistInput(paramName, param, gameData.items, 'item');
-        } else if (param.type === 'entity' && gameData && gameData.entities) {
-            // 实体类型使用带搜索功能的下拉框
-            fieldHTML += createDatalistInput(paramName, param, gameData.entities, 'entity');
-        } else if (param.type === 'block' && gameData && gameData.blocks) {
-            // 方块类型使用带搜索功能的下拉框
-            fieldHTML += createDatalistInput(paramName, param, gameData.blocks, 'block');
-        } else if (param.type === 'player') {
-            // 玩家选择器
-            fieldHTML += createDatalistInput(paramName, param, gameData.players, 'player');
+        // 添加参数描述
+        fieldHTML += `<div class="form-group">`;
+        fieldHTML += `<label for="${paramName}" data-lang="generator_param_${paramName}">${getText(`generator_param_${paramName}`) || param.description || paramName}:</label>`;
+        
+        // 根据参数类型创建不同的输入元素
+        if (param.type === 'boolean') {
+            fieldHTML += `
+                <select id="${paramName}" name="${paramName}" required>
+                    <option value="true" data-lang="generator_option_true">${getText('generator_option_true')}</option>
+                    <option value="false" data-lang="generator_option_false">${getText('generator_option_false')}</option>
+                </select>
+            `;
+        } else if (param.allowedValues && param.allowedValues.length > 0) {
+            fieldHTML += `
+                <select id="${paramName}" name="${paramName}" required>
+                    <option value="" data-lang="generator_select_default">${getText('generator_select_default')}</option>
+                    ${param.allowedValues.map(value => 
+                        `<option value="${value}" data-lang="generator_option_${value}">${getText(`generator_option_${value}`) || value}</option>`
+                    ).join('')}
+                </select>
+            `;
+        } else if (param.type === 'string' && gameData && gameData[param.suggestionsProvider]) {
+            fieldHTML += createDatalistInput(paramName, param);
         } else {
-            // 普通输入框
-            const placeholder = param.defaultValue || '';
-            const required = param.required ? 'required' : '';
-            fieldHTML += `<input type="text" id="${paramName}" placeholder="${placeholder}" ${required}>`;
+            // 默认创建文本输入框
+            fieldHTML += `<input type="text" id="${paramName}" name="${paramName}" placeholder="${param.placeholder || ''}" required>`;
         }
         
-        if (param.required) {
-            fieldHTML += '<span class="required">*</span>';
-        }
-        
-        fieldHTML += '</div>';
+        fieldHTML += `</div>`;
         return fieldHTML;
     }
     
     // 创建带数据列表的输入框
-    function createDatalistInput(paramName, param, data, type) {
-        const datalistId = `${paramName}-list`;
-        const placeholder = param.defaultValue || '';
-        const required = param.required ? 'required' : '';
+    function createDatalistInput(paramName, param) {
+        const dataListId = `${paramName}-list`;
+        const suggestions = gameData[param.suggestionsProvider] || [];
         
-        let html = `
-            <input type="text" id="${paramName}" list="${datalistId}" placeholder="${placeholder}" ${required}>
-            <datalist id="${datalistId}">
+        let inputHTML = `
+            <input type="text" id="${paramName}" name="${paramName}" list="${dataListId}" placeholder="${getText('generator_input_placeholder')}" required>
+            <datalist id="${dataListId}">
+                ${suggestions.map(item => `<option value="${item}">`).join('')}
+            </datalist>
         `;
         
-        data.forEach(item => {
-            html += `<option value="${item.value}" label="${item.name}">`;
-        });
-        
-        html += '</datalist>';
-        return html;
+        return inputHTML;
     }
     
     // 显示建议
@@ -225,43 +212,42 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 生成指令函数
     async function generateCommand() {
-        const commandName = commandTypeSelect.value;
+        const selectedCommand = commandTypeSelect.value;
         
-        if (!commandName) {
-            commandResult.textContent = '请选择指令类型并填写参数';
+        if (!selectedCommand) {
+            showError(getText('error_select_command'));
             return;
         }
         
-        // 收集表单参数
-        const parameters = {};
-        const inputs = commandForm.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            if (input.value) {
-                parameters[input.id] = input.value;
+        // 收集表单数据
+        const formData = new FormData(commandForm);
+        const params = {};
+        
+        for (const [key, value] of formData.entries()) {
+            if (key !== 'generateButton') { // 排除生成按钮
+                params[key] = value;
             }
-        });
+        }
         
         try {
-            const response = await fetch(`${API_BASE_URL}/${commandName}/generate`, {
+            const response = await fetch(`${API_BASE_URL}/${selectedCommand}/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(parameters)
+                body: JSON.stringify(params)
             });
             
             const result = await response.json();
             
             if (result.success) {
+                commandResult.textContent = result.data.command;
                 hideError();
-                commandResult.textContent = result.data;
             } else {
-                showError(result.error);
-                commandResult.textContent = '请选择指令类型并填写参数';
+                showError(getText('error_generate_command') + result.error);
             }
         } catch (error) {
-            showError('生成指令时发生网络错误: ' + error.message);
-            commandResult.textContent = '请选择指令类型并填写参数';
+            showError(getText('error_network') + error.message);
         }
     }
     
@@ -269,34 +255,31 @@ document.addEventListener('DOMContentLoaded', function() {
     function copyCommand() {
         const commandText = commandResult.textContent;
         
-        if (commandText && commandText !== '请选择指令类型并填写参数') {
-            navigator.clipboard.writeText(commandText).then(() => {
-                // 显示复制成功提示
-                const originalText = copyButton.textContent;
-                copyButton.textContent = '已复制!';
-                copyButton.style.backgroundColor = '#27ae60';
-                
-                setTimeout(() => {
-                    copyButton.textContent = originalText;
-                    copyButton.style.backgroundColor = '#3498db';
-                }, 2000);
-            }).catch(err => {
-                console.error('复制失败: ', err);
-                alert('复制失败，请手动复制指令');
-            });
-        } else {
-            alert('没有可复制的指令');
+        if (!commandText) {
+            showError(getText('error_copy_empty'));
+            return;
         }
+        
+        navigator.clipboard.writeText(commandText).then(() => {
+            // 显示成功消息
+            const originalText = copyButton.textContent;
+            copyButton.textContent = getText('generator_copy_success');
+            setTimeout(() => {
+                copyButton.textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            showError(getText('error_copy_failed') + err);
+        });
     }
     
     // 显示错误信息
     function showError(message) {
         errorMessage.textContent = message;
-        errorMessage.classList.add('show');
+        errorMessage.style.display = 'block';
     }
     
     // 隐藏错误信息
     function hideError() {
-        errorMessage.classList.remove('show');
+        errorMessage.style.display = 'none';
     }
 });

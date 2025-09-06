@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的世界指令生成器</title>
+    <title data-lang="generator_title">我的世界指令生成器</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>我的世界指令生成器</h1>
-            <p>通过图形化界面轻松生成游戏指令</p>
+            <h1 data-lang="generator_title">我的世界指令生成器</h1>
+            <p data-lang="generator_subtitle">通过图形化界面轻松生成游戏指令</p>
         </header>
         
         <main>
             <div class="loading" id="loadingIndicator" style="display: none;">
-                <p>正在加载指令列表...</p>
+                <p data-lang="generator_loading">正在加载指令列表...</p>
             </div>
             
             <div class="command-selector">
-                <label for="commandType">选择指令类型:</label>
+                <label for="commandType" data-lang="generator_select_label">选择指令类型:</label>
                 <select id="commandType">
-                    <option value="">请选择指令类型</option>
+                    <option value="" data-lang="generator_select_placeholder">请选择指令类型</option>
                 </select>
             </div>
             
@@ -30,33 +30,35 @@
             </div>
             
             <div class="result-container">
-                <h2>生成的指令</h2>
+                <h2 data-lang="generator_result_title">生成的指令</h2>
                 <div class="command-output">
-                    <pre id="commandResult">请选择指令类型并填写参数</pre>
-                    <button id="copyButton" class="copy-button">复制指令</button>
+                    <pre id="commandResult" data-lang="generator_result_placeholder">请选择指令类型并填写参数</pre>
+                    <button id="copyButton" class="copy-button" data-lang="generator_copy_btn">复制指令</button>
                 </div>
                 <div id="errorMessage" class="error-message"></div>
             </div>
         </main>
         
         <footer>
-            <p>我的世界指令生成器 &copy; 2023</p>
+            <p data-lang="generator_footer">我的世界指令生成器 &copy; 2023</p>
         </footer>
     </div>
     
+    <script src="langs.js"></script>
     <script src="script.js"></script>
     
     <!-- 横向图标化导航栏 -->
     <div class="icon-nav">
         <div class="nav-icons">
-            <div class="nav-icon-item" data-target="home" title="首页" onclick="window.location.href='home.html'">
+            <div class="nav-icon-item" data-target="home" title="首页" onclick="window.location.href='home.html'" data-lang="nav_home">
                 首页
             </div>
-            <div class="nav-icon-item active" data-target="generator" title="指令生成">
+            <div class="nav-icon-item active" data-target="generator" title="指令生成" data-lang="nav_generator">
                 指令生成
             </div>
-            <div class="nav-icon-item" data-target="contributors" title="贡献者" onclick="window.location.href='contributors.html'">
-                贡献者
+            <!-- 语言切换按钮 -->
+            <div class="nav-icon-item" id="langToggle" title="切换语言">
+                EN/中文
             </div>
         </div>
     </div>
