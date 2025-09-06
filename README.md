@@ -233,6 +233,7 @@ curl -X POST http://localhost:8080/minecraft-command/api/commands/effect/generat
   -d '{"player": "@a", "effect": "minecraft:speed", "seconds": "30", "amplifier": "2"}'
 ```
 → Response: `"/effect @a minecraft:speed 30 2"`
+<<<<<<< HEAD
 
 ---
 
@@ -252,3 +253,28 @@ Developed & maintained by:
 
 > 💬 Future updates may focus only on expanding the command library — or potentially removing backend dependency.
 
+=======
+
+---
+
+## 📜 License
+
+MIT License — See [LICENSE](LICENSE) for details.
+
+---
+
+## 👥 Contributors
+
+Developed & maintained by:
+
+- **Frontend**: AIEgirl  
+- **Backend**: AIEgirl  
+- **JSON Command Configs**: AIEgirl  
+
+> 💬 Future updates may focus only on expanding the command library — or potentially removing backend dependency.
+
+---
+
+
+如需我帮你生成中英双语切换版、或压缩成更短的版本，也可以告诉我 😊
+>>>>>>> 488f1e3f0742564cf36a0bb07deb10e4f4eb5ced
