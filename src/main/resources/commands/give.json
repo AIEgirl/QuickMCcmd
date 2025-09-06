@@ -1,0 +1,39 @@
+{
+  "name": "give",
+  "description": "给予玩家物品",
+  "template": "/give {{player}} {{item}} {{count}} {{data}}",
+  "parameters": {
+    "player": {
+      "name": "player",
+      "description": "目标玩家",
+      "type": "string",
+      "required": true,
+      "defaultValue": "@p",
+      "pattern": "^[\\w@\\[\\]{}~\\-]+$"
+    },
+    "item": {
+      "name": "item",
+      "description": "物品ID",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[\\w:]+$"
+    },
+    "count": {
+      "name": "count",
+      "description": "物品数量",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "1",
+      "pattern": "^\\d+$"
+    },
+    "data": {
+      "name": "data",
+      "description": "数据值",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "0",
+      "pattern": "^\\d+$"
+    }
+  }
+}

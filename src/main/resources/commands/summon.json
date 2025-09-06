@@ -1,0 +1,39 @@
+{
+  "name": "summon",
+  "description": "召唤实体",
+  "template": "/summon {{entity}} {{x}} {{y}} {{z}}",
+  "parameters": {
+    "entity": {
+      "name": "entity",
+      "description": "实体类型",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[\\w:]+$"
+    },
+    "x": {
+      "name": "x",
+      "description": "X坐标",
+      "type": "string",
+      "required": false,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "y": {
+      "name": "y",
+      "description": "Y坐标",
+      "type": "string",
+      "required": false,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "z": {
+      "name": "z",
+      "description": "Z坐标",
+      "type": "string",
+      "required": false,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    }
+  }
+}

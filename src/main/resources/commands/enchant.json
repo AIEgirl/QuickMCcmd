@@ -1,0 +1,68 @@
+{
+  "name": "enchant",
+  "description": "给玩家手中的物品添加附魔",
+  "template": "enchant {{player}} {{enchantment}} {{level}}",
+  "parameters": {
+    "player": {
+      "name": "目标玩家",
+      "description": "要附魔的玩家",
+      "type": "player",
+      "required": true,
+      "defaultValue": "@p"
+    },
+    "enchantment": {
+      "name": "附魔类型",
+      "description": "要添加的附魔",
+      "type": "enum",
+      "required": true,
+      "options": [
+        "minecraft:protection",
+        "minecraft:fire_protection",
+        "minecraft:feather_falling",
+        "minecraft:blast_protection",
+        "minecraft:projectile_protection",
+        "minecraft:respiration",
+        "minecraft:aqua_affinity",
+        "minecraft:thorns",
+        "minecraft:depth_strider",
+        "minecraft:frost_walker",
+        "minecraft:sharpness",
+        "minecraft:smite",
+        "minecraft:bane_of_arthropods",
+        "minecraft:knockback",
+        "minecraft:fire_aspect",
+        "minecraft:looting",
+        "minecraft:sweeping",
+        "minecraft:efficiency",
+        "minecraft:silk_touch",
+        "minecraft:unbreaking",
+        "minecraft:fortune",
+        "minecraft:power",
+        "minecraft:punch",
+        "minecraft:flame",
+        "minecraft:infinity",
+        "minecraft:luck_of_the_sea",
+        "minecraft:lure",
+        "minecraft:loyalty",
+        "minecraft:impaling",
+        "minecraft:riptide",
+        "minecraft:channeling",
+        "minecraft:multishot",
+        "minecraft:quick_charge",
+        "minecraft:piercing",
+        "minecraft:mending",
+        "minecraft:vanishing_curse",
+        "minecraft:binding_curse"
+      ]
+    },
+    "level": {
+      "name": "附魔等级",
+      "description": "附魔的等级",
+      "type": "integer",
+      "required": true,
+      "defaultValue": "1",
+      "min": 1,
+      "max": 255
+    }
+  }
+}

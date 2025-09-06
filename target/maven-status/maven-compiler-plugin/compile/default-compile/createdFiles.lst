@@ -1,0 +1,9 @@
+com\minecraft\command\controller\GameDataController.class
+com\minecraft\command\config\AppConfig.class
+com\minecraft\command\model\Parameter.class
+com\minecraft\command\service\CommandConfigManager.class
+com\minecraft\command\Application.class
+com\minecraft\command\model\Command.class
+com\minecraft\command\service\CommandGeneratorService.class
+com\minecraft\command\controller\CommandController.class
+com\minecraft\command\service\GameDataService.class

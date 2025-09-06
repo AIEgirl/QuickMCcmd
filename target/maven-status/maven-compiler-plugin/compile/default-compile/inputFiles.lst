@@ -1,0 +1,9 @@
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\Application.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\config\AppConfig.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\controller\CommandController.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\controller\GameDataController.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\model\Command.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\model\Parameter.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\service\CommandConfigManager.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\service\CommandGeneratorService.java
+C:\Users\wangw\Desktop\MinecraftCommand\src\main\java\com\minecraft\command\service\GameDataService.java

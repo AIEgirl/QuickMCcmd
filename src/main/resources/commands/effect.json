@@ -1,0 +1,87 @@
+{
+  "name": "effect",
+  "description": "给玩家添加或移除状态效果",
+  "template": "effect {{action}} {{player}} {{effect}} {{duration}} {{amplifier}} {{hideParticles}}",
+  "parameters": {
+    "action": {
+      "name": "操作类型",
+      "description": "给予或移除效果",
+      "type": "enum",
+      "required": true,
+      "options": ["give", "clear"],
+      "defaultValue": "give"
+    },
+    "player": {
+      "name": "目标玩家",
+      "description": "要给予效果的玩家",
+      "type": "player",
+      "required": true,
+      "defaultValue": "@p"
+    },
+    "effect": {
+      "name": "效果类型",
+      "description": "要给予的状态效果",
+      "type": "enum",
+      "required": true,
+      "options": [
+        "minecraft:speed",
+        "minecraft:slowness",
+        "minecraft:haste",
+        "minecraft:mining_fatigue",
+        "minecraft:strength",
+        "minecraft:instant_health",
+        "minecraft:instant_damage",
+        "minecraft:jump_boost",
+        "minecraft:nausea",
+        "minecraft:regeneration",
+        "minecraft:resistance",
+        "minecraft:fire_resistance",
+        "minecraft:water_breathing",
+        "minecraft:invisibility",
+        "minecraft:blindness",
+        "minecraft:night_vision",
+        "minecraft:hunger",
+        "minecraft:weakness",
+        "minecraft:poison",
+        "minecraft:wither",
+        "minecraft:health_boost",
+        "minecraft:absorption",
+        "minecraft:saturation",
+        "minecraft:glowing",
+        "minecraft:levitation",
+        "minecraft:luck",
+        "minecraft:unluck",
+        "minecraft:conduit_power",
+        "minecraft:dolphins_grace",
+        "minecraft:bad_omen",
+        "minecraft:hero_of_the_village",
+        "minecraft:darkness"
+      ]
+    },
+    "duration": {
+      "name": "持续时间",
+      "description": "效果持续时间（秒）",
+      "type": "integer",
+      "required": true,
+      "defaultValue": "30",
+      "min": 0,
+      "max": 1000000
+    },
+    "amplifier": {
+      "name": "强度等级",
+      "description": "效果强度等级（0-255）",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "0",
+      "min": 0,
+      "max": 255
+    },
+    "hideParticles": {
+      "name": "隐藏粒子",
+      "description": "是否隐藏效果粒子",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": "false"
+    }
+  }
+}

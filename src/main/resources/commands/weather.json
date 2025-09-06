@@ -1,0 +1,32 @@
+{
+  "name": "weather",
+  "description": "更改天气状态",
+  "template": "weather {{type}} {{duration}}",
+  "parameters": {
+    "type": {
+      "name": "天气类型",
+      "description": "要设置的天气类型",
+      "type": "enum",
+      "required": true,
+      "options": [
+        "clear",
+        "rain",
+        "thunder"
+      ],
+      "optionLabels": {
+        "clear": "晴天",
+        "rain": "下雨",
+        "thunder": "雷暴"
+      }
+    },
+    "duration": {
+      "name": "持续时间",
+      "description": "天气持续时间（秒）",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "6000",
+      "min": 1,
+      "max": 1000000
+    }
+  }
+}

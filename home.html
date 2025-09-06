@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft指令生成器 - 首页</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 幻彩壁纸样式 - 贯穿整个页面 */
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .hero-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-primary:hover {
+            background: white;
+            color: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0,0,0,0.5);
+            transform: translateY(-3px);
+        }
+
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .features-section {
+            padding: 80px 20px;
+            background: rgba(255,255,255,0.85);
+            margin: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .feature-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        /* 贡献者区域样式 */
+        .contributors-section-home {
+            padding: 80px 20px;
+            background: rgba(255,255,255,0.85);
+            margin: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .contributors-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contributors-section {
+            margin-bottom: 40px;
+        }
+
+        .contributors-section h3 {
+            margin-bottom: 20px;
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        .contributor-card {
+            background: transparent;
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .contributor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contributor-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .contributor-card:hover .contributor-avatar {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .contributor-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .contributor-role {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 首页内容 -->
+    <section class="hero-section">
+        <div class="floating-particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Minecraft指令生成器</h1>
+            <div class="hero-buttons">
+                <a href="index.html" class="hero-btn btn-primary">开始生成</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 贡献者区域 -->
+    <section class="contributors-section-home">
+        <div class="contributors-container">
+            <h2 class="section-title">项目贡献者</h2>
+            
+            <div class="contributors-section">
+                <h3>前端开发</h3>
+                <div class="contributors-grid" id="frontendContributors">
+                    <!-- 前端贡献者 -->
+                </div>
+            </div>
+            
+            <div class="contributors-section">
+                <h3>后端开发</h3>
+                <div class="contributors-grid" id="backendContributors">
+                    <!-- 后端贡献者 -->
+                </div>
+            </div>
+            
+            <div class="contributors-section">
+                <h3>JSON指令</h3>
+                <div class="contributors-grid" id="jsonContributors">
+                    <!-- JSON指令贡献者 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 导航栏 -->
+    <div class="icon-nav">
+        <div class="nav-icons">
+            <div class="nav-icon-item active" data-target="home" title="首页" onclick="window.location.href='home.html'">
+                首页
+            </div>
+            <div class="nav-icon-item" data-target="generator" title="指令生成" onclick="window.location.href='index.html'">
+                指令生成
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 创建浮动粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 随机大小和位置
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // 随机动画延迟和持续时间
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 贡献者数据
+        const contributorsData = {
+            frontend: [
+                {
+                    name: "AIE_fish",
+                    role: "前端开发",
+                    avatar: "https://ui-avatars.com/api/?name=张三&background=007bff&color=fff&size=100",
+                    details: "负责前端界面设计和用户体验优化"
+                }
+            ],
+            backend: [
+                {
+                    name: "王五",
+                    role: "后端开发",
+                    avatar: "https://ui-avatars.com/api/?name=王五&background=dc3545&color=fff&size=100",
+                    details: "负责后端API开发和数据处理"
+                },
+                {
+                    name: "赵六",
+                    role: "数据库设计",
+                    avatar: "https://ui-avatars.com/api/?name=赵六&background=6f42c1&color=fff&size=100",
+                    details: "负责数据库架构和数据存储"
+                }
+            ],
+            json: [
+                {
+                    name: "孙七",
+                    role: "JSON指令",
+                    avatar: "https://ui-avatars.com/api/?name=孙七&background=fd7e14&color=fff&size=100",
+                    details: "负责Minecraft指令格式设计和验证"
+                },
+                {
+                    name: "周八",
+                    role: "游戏数据",
+                    avatar: "https://ui-avatars.com/api/?name=周八&background=20c997&color=fff&size=100",
+                    details: "负责游戏数据收集和整理"
+                }
+            ]
+        };
+
+        // 渲染贡献者
+        function renderContributors() {
+            // 渲染前端贡献者
+            const frontendContainer = document.getElementById('frontendContributors');
+            contributorsData.frontend.forEach(contributor => {
+                frontendContainer.appendChild(createContributorCard(contributor));
+            });
+
+            // 渲染后端贡献者
+            const backendContainer = document.getElementById('backendContributors');
+            contributorsData.backend.forEach(contributor => {
+                backendContainer.appendChild(createContributorCard(contributor));
+            });
+
+            // 渲染JSON贡献者
+            const jsonContainer = document.getElementById('jsonContributors');
+            contributorsData.json.forEach(contributor => {
+                jsonContainer.appendChild(createContributorCard(contributor));
+            });
+        }
+
+        // 创建贡献者卡片
+        function createContributorCard(contributor) {
+            const card = document.createElement('div');
+            card.className = 'contributor-card';
+            
+            card.innerHTML = `
+                <img class="contributor-avatar" src="${contributor.avatar}" alt="${contributor.name}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(contributor.name)}&background=cccccc&color=fff&size=100'">
+                <div class="contributor-name">${contributor.name}</div>
+                <div class="contributor-role">${contributor.role}</div>
+            `;
+            
+            return card;
+        }
+
+        // 平滑滚动
+        function smoothScroll(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // 导航功能
+        document.querySelectorAll('.nav-icon-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                
+                if (target === 'generator') {
+                    window.location.href = 'index.html';
+                } else if (target === 'home') {
+                    // 已经在首页
+                }
+                
+                // 更新活跃状态
+                document.querySelectorAll('.nav-icon-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 初始化
+        createParticles();
+        renderContributors();
+        
+        // 设置首页为活动状态
+        document.querySelectorAll('.nav-icon-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelector('.nav-icon-item[data-target="home"]').classList.add('active');
+    </script>
+</body>
+</html>

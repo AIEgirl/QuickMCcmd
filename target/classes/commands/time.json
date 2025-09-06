@@ -1,0 +1,35 @@
+{
+  "name": "time",
+  "description": "更改或查询游戏时间",
+  "template": "time {{action}} {{value}}",
+  "parameters": {
+    "action": {
+      "name": "操作类型",
+      "description": "要对时间进行的操作",
+      "type": "enum",
+      "required": true,
+      "options": [
+        "set",
+        "add",
+        "query"
+      ]
+    },
+    "value": {
+      "name": "时间值",
+      "description": "要设置的时间值或查询的时间类型",
+      "type": "string",
+      "required": true,
+      "defaultValue": "day",
+      "suggestions": [
+        "day",
+        "noon",
+        "night",
+        "midnight",
+        "1000",
+        "6000",
+        "12000",
+        "18000"
+      ]
+    }
+  }
+}

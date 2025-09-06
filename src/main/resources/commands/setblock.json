@@ -1,0 +1,47 @@
+{
+  "name": "setblock",
+  "description": "在指定位置放置方块",
+  "template": "/setblock {{x}} {{y}} {{z}} {{block}} {{data}}",
+  "parameters": {
+    "x": {
+      "name": "x",
+      "description": "X坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "y": {
+      "name": "y",
+      "description": "Y坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "z": {
+      "name": "z",
+      "description": "Z坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "block": {
+      "name": "block",
+      "description": "方块ID",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[\\w:]+$"
+    },
+    "data": {
+      "name": "data",
+      "description": "方块数据值",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "0",
+      "pattern": "^\\d+$"
+    }
+  }
+}

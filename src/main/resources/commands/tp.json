@@ -1,0 +1,23 @@
+{
+  "name": "tp",
+  "description": "传送玩家",
+  "template": "/tp {{source}} {{destination}}",
+  "parameters": {
+    "source": {
+      "name": "source",
+      "description": "源玩家",
+      "type": "string",
+      "required": true,
+      "defaultValue": "@p",
+      "pattern": "^[\\w@\\[\\]{}~\\- \\d\\.]+$"
+    },
+    "destination": {
+      "name": "destination",
+      "description": "目标位置",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[\\w@\\[\\]{}~\\- \\d\\.]+$"
+    }
+  }
+}

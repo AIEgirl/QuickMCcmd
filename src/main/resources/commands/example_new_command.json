@@ -1,0 +1,31 @@
+{
+  "name": "example_new_command",
+  "description": "新指令示例 - 展示如何扩展新的指令支持",
+  "template": "/example_new_command {{target}} {{action}} {{value}}",
+  "parameters": {
+    "target": {
+      "name": "target",
+      "description": "目标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "@p",
+      "pattern": "^[\\w@\\[\\]{}~\\-]+$"
+    },
+    "action": {
+      "name": "action",
+      "description": "动作类型",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[a-zA-Z_]+$"
+    },
+    "value": {
+      "name": "value",
+      "description": "数值参数",
+      "type": "integer",
+      "required": false,
+      "defaultValue": "0",
+      "pattern": "^\\d+$"
+    }
+  }
+}

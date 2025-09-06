@@ -1,0 +1,63 @@
+{
+  "name": "fill",
+  "description": "用方块填充一个区域",
+  "template": "/fill {{x1}} {{y1}} {{z1}} {{x2}} {{y2}} {{z2}} {{block}}",
+  "parameters": {
+    "x1": {
+      "name": "x1",
+      "description": "起始X坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "y1": {
+      "name": "y1",
+      "description": "起始Y坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "z1": {
+      "name": "z1",
+      "description": "起始Z坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "x2": {
+      "name": "x2",
+      "description": "结束X坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "y2": {
+      "name": "y2",
+      "description": "结束Y坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "z2": {
+      "name": "z2",
+      "description": "结束Z坐标",
+      "type": "string",
+      "required": true,
+      "defaultValue": "~",
+      "pattern": "^[~\\d\\-\\.]+$"
+    },
+    "block": {
+      "name": "block",
+      "description": "方块ID",
+      "type": "string",
+      "required": true,
+      "defaultValue": "",
+      "pattern": "^[\\w:]+$"
+    }
+  }
+}

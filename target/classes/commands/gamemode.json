@@ -1,0 +1,40 @@
+{
+  "name": "gamemode",
+  "description": "更改玩家的游戏模式",
+  "template": "gamemode {{mode}} {{player}}",
+  "parameters": {
+    "mode": {
+      "name": "游戏模式",
+      "description": "要设置的游戏模式",
+      "type": "enum",
+      "required": true,
+      "options": [
+        "survival",
+        "creative",
+        "adventure",
+        "spectator",
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "optionLabels": {
+        "survival": "生存模式",
+        "creative": "创造模式",
+        "adventure": "冒险模式",
+        "spectator": "旁观模式",
+        "0": "生存模式",
+        "1": "创造模式",
+        "2": "冒险模式",
+        "3": "旁观模式"
+      }
+    },
+    "player": {
+      "name": "目标玩家",
+      "description": "要更改游戏模式的玩家",
+      "type": "player",
+      "required": true,
+      "defaultValue": "@p"
+    }
+  }
+}
